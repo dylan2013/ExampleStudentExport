@@ -44,6 +44,10 @@
       <HintPath>..\..\Library\FISCA.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="FISCA.Authentication">
+      <HintPath>..\..\高中_ischool\kernel\FISCA.Authentication.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="FISCA.Data">
       <HintPath>..\..\Library\FISCA.Data.dll</HintPath>
       <Private>False</Private>
@@ -115,14 +119,39 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AbstractRequestGenerator.cs" />
+    <Compile Include="BaseCondition.cs" />
+    <Compile Include="BaseFieldFormater.cs" />
     <Compile Include="Class1.cs" />
+    <Compile Include="Export\ExportCell.cs" />
+    <Compile Include="Export\ExportField.cs" />
+    <Compile Include="Export\ExportFieldCollection.cs" />
+    <Compile Include="Export\ExportOutput.cs" />
+    <Compile Include="Export\ExportRow.cs" />
+    <Compile Include="Export\ExportRowCollection.cs" />
+    <Compile Include="Export\ExportStudentConnector.cs" />
+    <Compile Include="Export\ExportStudentRequestGenerator.cs" />
+    <Compile Include="Export\ExportTable.cs" />
     <Compile Include="ExportWizard.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ExportWizard.designer.cs">
       <DependentUpon>ExportWizard.cs</DependentUpon>
     </Compile>
+    <Compile Include="Field\Field.cs" />
+    <Compile Include="Field\FieldCollection.cs" />
+    <Compile Include="Field\FieldUtil.cs" />
+    <Compile Include="InterFace\ICondition.cs" />
+    <Compile Include="InterFace\IExportConnector.cs" />
+    <Compile Include="InterFace\IFieldFormater.cs" />
+    <Compile Include="InterFace\IOutput.cs" />
+    <Compile Include="InterFace\IRequestGenerator.cs" />
+    <Compile Include="InterFace\IResponseFormater.cs" />
+    <Compile Include="Order.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueryRequestAttribute.cs" />
+    <Compile Include="ResponseFormater.cs" />
+    <Compile Include="StudentBulkProcess.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ExportWizard.resx">

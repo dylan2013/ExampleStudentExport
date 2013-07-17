@@ -16,60 +16,10 @@ namespace ExampleStudentExport
 {
     public partial class ExportWizard : FISCA.Presentation.Controls.BaseForm
     {
-        //private ButtonX advButton;
-        //private DevComponents.DotNetBar.ControlContainerItem advContainer;
-        //private LinkLabel helpButton;
-
-        //public event EventHandler HelpButtonClick;
-
         public ExportWizard()
         {
             InitializeComponent();
 
-            //#region 加入進階跟HELP按鈕
-            //advContainer = new ControlContainerItem();
-            //advContainer.AllowItemResize = false;
-            //advContainer.GlobalItem = false;
-            //advContainer.MenuVisibility = eMenuVisibility.VisibleAlways;
-
-            //ItemContainer itemContainer2 = new ItemContainer();
-            //itemContainer2.LayoutOrientation = DevComponents.DotNetBar.eOrientation.Vertical;
-            //itemContainer2.MinimumSize = new System.Drawing.Size(0, 0);
-            //itemContainer2.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
-            //advContainer});
-
-            //advButton = new ButtonX();
-            //advButton.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            //advButton.Text = "    進階";
-            //advButton.Top = this.wizard1.Controls[1].Controls[0].Top;
-            //advButton.Left = 5;
-            //advButton.Size = this.wizard1.Controls[1].Controls[0].Size;
-            //advButton.Visible = true;
-            //advButton.SubItems.Add(itemContainer2);
-            //advButton.PopupSide = ePopupSide.Top;
-            //advButton.SplitButton = true;
-            //advButton.Enabled = false;
-            //advButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            //advButton.AutoExpandOnClick = true;
-            //advButton.SubItemsExpandWidth = 16;
-            //advButton.FadeEffect = false;
-            //advButton.FocusCuesEnabled = false;
-            //this.wizard1.Controls[1].Controls.Add(advButton);
-
-            //helpButton = new LinkLabel();
-            //helpButton.AutoSize = true;
-            //helpButton.BackColor = System.Drawing.Color.Transparent;
-            //helpButton.Location = new System.Drawing.Point(81, 10);
-            //helpButton.Size = new System.Drawing.Size(69, 17);
-            //helpButton.TabStop = true;
-            //helpButton.Text = "Help";
-            ////helpButton.Top = this.wizard1.Controls[1].Controls[0].Top + this.wizard1.Controls[1].Controls[0].Height - helpButton.Height;
-            ////helpButton.Left = 150;
-            //helpButton.Visible = false;
-            //helpButton.Click += delegate { if (HelpButtonClick != null)HelpButtonClick(this, new EventArgs()); };
-            //helpButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            //this.wizard1.Controls[1].Controls.Add(helpButton);
-            //#endregion
 
             #region 設定Wizard會跟著Style跑
             this.wizard1.HeaderStyle.ApplyStyle((GlobalManager.Renderer as Office2007Renderer).ColorTable.GetClass(ElementStyleClassKeys.RibbonFileMenuBottomContainerKey));
@@ -86,6 +36,23 @@ namespace ExampleStudentExport
             (this.wizard1.Controls[0].Controls[1] as System.Windows.Forms.Label).ForeColor = (GlobalManager.Renderer as Office2007Renderer).ColorTable.RibbonBar.MouseOver.TitleText;
             (this.wizard1.Controls[0].Controls[2] as System.Windows.Forms.Label).ForeColor = (GlobalManager.Renderer as Office2007Renderer).ColorTable.RibbonBar.Default.TitleText;
             #endregion
+        }
+
+        /// <summary>
+        /// 畫面載入
+        /// </summary>
+        private void ExportWizard_Load(object sender, EventArgs e)
+        {
+            XmlElement element = StudentBulkProcess.GetExportDescription();
+            BaseFieldFormater formater = new BaseFieldFormater();
+            FieldCollection collection = formater.Format(element);
+
+            foreach (Field field in collection)
+            {
+                ListViewItem item = listView.Items.Add(field.DisplayText);
+                item.Tag = field;
+                item.Checked = true;
+            }
         }
 
         private void wizard1_CancelButtonClick(object sender, CancelEventArgs e)
@@ -137,20 +104,6 @@ namespace ExampleStudentExport
                     }
                 }
                 this.Close();
-            }
-        }
-
-        private void ExportWizard_Load(object sender, EventArgs e)
-        {
-            XmlElement element = SmartSchool.Feature.Student.StudentBulkProcess.GetExportDescription();
-            BaseFieldFormater formater = new BaseFieldFormater();
-            FieldCollection collection = formater.Format(element);
-
-            foreach (Field field in collection)
-            {
-                ListViewItem item = listView.Items.Add(field.DisplayText);
-                item.Tag = field;
-                item.Checked = true;
             }
         }
 
