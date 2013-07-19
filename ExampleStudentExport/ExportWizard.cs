@@ -74,10 +74,12 @@ namespace ExampleStudentExport
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 ExportStudentConnector ec = new ExportStudentConnector();
+                //取得所選學生的ID清單
                 foreach (BriefStudentData student in SmartSchool.StudentRelated.Student.Instance.SelectionStudents)
                 {
                     ec.AddCondition(student.ID);
                 }
+
                 ec.SetSelectedFields(GetSelectedFields());
                 ExportTable table = ec.Export();
 
@@ -107,6 +109,9 @@ namespace ExampleStudentExport
             }
         }
 
+        /// <summary>
+        /// 取得目前被選擇所要匯出的資料
+        /// </summary>
         private FieldCollection GetSelectedFields()
         {
             FieldCollection collection = new FieldCollection();
